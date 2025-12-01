@@ -18,3 +18,5 @@ export const INITIAL_COUPONS: Coupon[] = [
     discountValue: 10,
   },
 ];
+
+export const COUPON_STORAGE_KEY = 'coupons';

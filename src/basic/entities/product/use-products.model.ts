@@ -13,6 +13,35 @@
 // - addProductDiscount: 할인 규칙 추가
 // - removeProductDiscount: 할인 규칙 삭제
 
+import { useLocalStorage } from '../../shared/hooks/use-local-storage';
+import {
+  INITIAL_PRODUCTS,
+  PRODUCT_STORAGE_KEY,
+} from './product-constants.config';
+import { ProductWithUI } from './product-interface.model';
+
 export function useProducts() {
-  // TODO: 구현
+  const [products, setProducts] = useLocalStorage<ProductWithUI[]>(
+    PRODUCT_STORAGE_KEY,
+    INITIAL_PRODUCTS,
+  );
+
+  const updateProduct = () => {};
+
+  const addProduct = () => {};
+
+  const updateProductStock = () => {};
+
+  const addProductDiscount = () => {};
+
+  const removeProductDiscount = () => {};
+
+  return {
+    products,
+    updateProduct,
+    addProduct,
+    updateProductStock,
+    addProductDiscount,
+    removeProductDiscount,
+  };
 }

@@ -33,3 +33,5 @@ export const INITIAL_PRODUCTS: ProductWithUI[] = [
     description: '대용량과 고성능을 자랑하는 상품입니다.',
   },
 ];
+
+export const PRODUCT_STORAGE_KEY = 'products';

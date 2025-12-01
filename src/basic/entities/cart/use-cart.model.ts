@@ -24,6 +24,32 @@
 // - getRemainingStock: 재고 확인 함수
 // - clearCart: 장바구니 비우기 함수
 
+import { useState } from 'react';
+import { CartItem, Coupon } from '../../../types';
+import { useLocalStorage } from '../../shared/hooks/use-local-storage';
+import { CART_STORAGE_KEY } from './cart-constants.config';
+
 export function useCart() {
-  // TODO: 구현
+  const [cart, setCart] = useLocalStorage<CartItem[]>(CART_STORAGE_KEY, []);
+  const [selectedCoupon, setSelectedCoupon] = useState<Coupon | null>(null);
+
+  const addToCart = () => {};
+  const removeFromCart = () => {};
+  const updateQuantity = () => {};
+  const applyCoupon = () => {};
+  const calculateTotal = () => {};
+  const getRemainingStock = () => {};
+  const clearCart = () => {};
+
+  return {
+    cart,
+    selectedCoupon,
+    addToCart,
+    removeFromCart,
+    updateQuantity,
+    applyCoupon,
+    calculateTotal,
+    getRemainingStock,
+    clearCart,
+  };
 }

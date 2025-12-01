@@ -8,6 +8,21 @@
 // - addCoupon: 새 쿠폰 추가
 // - removeCoupon: 쿠폰 삭제
 
+import { Coupon } from '../../../types';
+import { useLocalStorage } from '../../shared/hooks/use-local-storage';
+import { COUPON_STORAGE_KEY, INITIAL_COUPONS } from './coupon-constants.config';
+
 export function useCoupons() {
-  // TODO: 구현
+  const [coupons, setCoupons] = useLocalStorage<Coupon[]>(
+    COUPON_STORAGE_KEY,
+    INITIAL_COUPONS,
+  );
+
+  const addCoupon = () => {};
+  const removeCoupon = () => {};
+  return {
+    coupons,
+    addCoupon,
+    removeCoupon,
+  };
 }
