@@ -18,11 +18,14 @@
 
 import { useCallback, useState } from 'react';
 import { ProductWithUI } from '../../entities/product';
-import { INITIAL_PRODUCTS } from '../../entities/product/product-constants.config';
 import { CartItem, Coupon, Product } from '../../../types';
-import { INITIAL_COUPONS } from '../../entities/coupon';
 
 interface PropsType {
+  products: ProductWithUI[];
+  coupons: Coupon[];
+  cart: CartItem[];
+  debouncedSearchTerm: string;
+  onChangeCart: (callback: (cart: CartItem[]) => CartItem[]) => void;
   onAddNotification: ({
     message,
     type,
@@ -30,41 +33,16 @@ interface PropsType {
     message: string;
     type: 'error' | 'success' | 'warning';
   }) => void;
-  debouncedSearchTerm: string;
-  cart: CartItem[];
-  onChangeCart: (callback: (cart: CartItem[]) => CartItem[]) => void;
 }
 
 export function CartPage({
-  onAddNotification,
-  debouncedSearchTerm,
+  products,
+  coupons,
   cart,
+  debouncedSearchTerm,
   onChangeCart,
+  onAddNotification,
 }: PropsType) {
-  const [products] = useState<ProductWithUI[]>(() => {
-    const saved = localStorage.getItem('products');
-    if (saved) {
-      try {
-        return JSON.parse(saved);
-      } catch {
-        return INITIAL_PRODUCTS;
-      }
-    }
-    return INITIAL_PRODUCTS;
-  });
-
-  const [coupons] = useState<Coupon[]>(() => {
-    const saved = localStorage.getItem('coupons');
-    if (saved) {
-      try {
-        return JSON.parse(saved);
-      } catch {
-        return INITIAL_COUPONS;
-      }
-    }
-    return INITIAL_COUPONS;
-  });
-
   const [selectedCoupon, setSelectedCoupon] = useState<Coupon | null>(null);
 
   const formatPrice = (price: number, productId?: string): string => {

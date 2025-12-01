@@ -14,14 +14,18 @@
 // - ProductAccordion: 상품 정보 표시 및 수정
 // - CouponForm: 새 쿠폰 추가 폼
 
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { ProductWithUI } from '../../entities/product';
-import { INITIAL_PRODUCTS } from '../../entities/product/product-constants.config';
 import { Coupon, Product } from '../../../types';
-import { INITIAL_COUPONS } from '../../entities/coupon';
 import { formatPrice } from '../../shared/lib/formatters';
 
 interface PropsType {
+  products: ProductWithUI[];
+  coupons: Coupon[];
+  onChangeProducts: (
+    callback: (products: ProductWithUI[]) => ProductWithUI[],
+  ) => void;
+  onChangeCoupons: (callback: (coupons: Coupon[]) => Coupon[]) => void;
   onAddNotification: ({
     message,
     type,
@@ -32,31 +36,13 @@ interface PropsType {
 }
 
 // - CouponList: 쿠폰 목록 표시
-export function AdminPage({ onAddNotification }: PropsType) {
-  const [products, setProducts] = useState<ProductWithUI[]>(() => {
-    const saved = localStorage.getItem('products');
-    if (saved) {
-      try {
-        return JSON.parse(saved);
-      } catch {
-        return INITIAL_PRODUCTS;
-      }
-    }
-    return INITIAL_PRODUCTS;
-  });
-
-  const [coupons, setCoupons] = useState<Coupon[]>(() => {
-    const saved = localStorage.getItem('coupons');
-    if (saved) {
-      try {
-        return JSON.parse(saved);
-      } catch {
-        return INITIAL_COUPONS;
-      }
-    }
-    return INITIAL_COUPONS;
-  });
-
+export function AdminPage({
+  products,
+  coupons,
+  onChangeProducts,
+  onChangeCoupons,
+  onAddNotification,
+}: PropsType) {
   const [activeTab, setActiveTab] = useState<'products' | 'coupons'>(
     'products',
   );
@@ -88,7 +74,7 @@ export function AdminPage({ onAddNotification }: PropsType) {
         ...newProduct,
         id: `p${Date.now()}`,
       };
-      setProducts(prev => [...prev, product]);
+      onChangeProducts(prev => [...prev, product]);
       onAddNotification({
         message: '상품이 추가되었습니다.',
         type: 'success',
@@ -99,7 +85,7 @@ export function AdminPage({ onAddNotification }: PropsType) {
 
   const updateProduct = useCallback(
     (productId: string, updates: Partial<ProductWithUI>) => {
-      setProducts(prev =>
+      onChangeProducts(prev =>
         prev.map(product =>
           product.id === productId ? { ...product, ...updates } : product,
         ),
@@ -114,7 +100,7 @@ export function AdminPage({ onAddNotification }: PropsType) {
 
   const deleteProduct = useCallback(
     (productId: string) => {
-      setProducts(prev => prev.filter(p => p.id !== productId));
+      onChangeProducts(prev => prev.filter(p => p.id !== productId));
       onAddNotification({
         message: '상품이 삭제되었습니다.',
         type: 'success',
@@ -133,7 +119,7 @@ export function AdminPage({ onAddNotification }: PropsType) {
         });
         return;
       }
-      setCoupons(prev => [...prev, newCoupon]);
+      onChangeCoupons(prev => [...prev, newCoupon]);
       onAddNotification({
         message: '쿠폰이 추가되었습니다.',
         type: 'success',
@@ -144,7 +130,7 @@ export function AdminPage({ onAddNotification }: PropsType) {
 
   const deleteCoupon = useCallback(
     (couponCode: string) => {
-      setCoupons(prev => prev.filter(c => c.code !== couponCode));
+      onChangeCoupons(prev => prev.filter(c => c.code !== couponCode));
       if (selectedCoupon?.code === couponCode) {
         setSelectedCoupon(null);
       }
@@ -213,14 +199,6 @@ export function AdminPage({ onAddNotification }: PropsType) {
     }
     return formatPrice(product.price);
   };
-
-  useEffect(() => {
-    localStorage.setItem('products', JSON.stringify(products));
-  }, [products]);
-
-  useEffect(() => {
-    localStorage.setItem('coupons', JSON.stringify(coupons));
-  }, [coupons]);
 
   return (
     <div className="max-w-6xl mx-auto">
