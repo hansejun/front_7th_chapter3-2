@@ -9,12 +9,12 @@ import { ProductWithUI } from './entities/product';
 import { INITIAL_PRODUCTS } from './entities/product/product-constants.config';
 import { INITIAL_COUPONS } from './entities/coupon';
 import { useLocalStorage } from './shared/hooks/use-local-storage';
+import { useDebounce } from './shared/hooks/use-debounce';
 
 // 초기 데이터
 
 const App = () => {
   const { notifications, addNotification, removeNotification } = useToast();
-  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('');
 
   const [products, setProducts] = useLocalStorage<ProductWithUI[]>(
     'products',
@@ -46,12 +46,7 @@ const App = () => {
     setCoupons(callback);
   };
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setDebouncedSearchTerm(searchTerm);
-    }, 500);
-    return () => clearTimeout(timer);
-  }, [searchTerm]);
+  const debouncedSearchTerm = useDebounce(searchTerm, 500);
 
   useEffect(() => {
     const count = cart.reduce((sum, item) => sum + item.quantity, 0);
