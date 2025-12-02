@@ -18,28 +18,25 @@ import { useCallback, useState } from 'react';
 import { ProductWithUI } from '../../entities/product';
 import { Coupon, Product } from '../../../types';
 import { formatPrice } from '../../shared/lib/formatters';
+import { ToastProps } from '../../shared/ui/toast';
 
 interface PropsType {
   products: ProductWithUI[];
   coupons: Coupon[];
-  onChangeProducts: (
-    callback: (products: ProductWithUI[]) => ProductWithUI[],
-  ) => void;
+  onAddProduct: (newProduct: Omit<ProductWithUI, 'id'>) => void;
+  onUpdateProduct: (productId: string, updates: Partial<ProductWithUI>) => void;
+  onDeleteProduct: (productId: string) => void;
   onChangeCoupons: (callback: (coupons: Coupon[]) => Coupon[]) => void;
-  onAddNotification: ({
-    message,
-    type,
-  }: {
-    message: string;
-    type: 'error' | 'success' | 'warning';
-  }) => void;
+  onAddNotification: (notification: ToastProps) => void;
 }
 
 // - CouponList: 쿠폰 목록 표시
 export function AdminPage({
   products,
   coupons,
-  onChangeProducts,
+  onAddProduct,
+  onUpdateProduct,
+  onDeleteProduct,
   onChangeCoupons,
   onAddNotification,
 }: PropsType) {
@@ -68,46 +65,10 @@ export function AdminPage({
     discountValue: 0,
   });
 
-  const addProduct = useCallback(
-    (newProduct: Omit<ProductWithUI, 'id'>) => {
-      const product: ProductWithUI = {
-        ...newProduct,
-        id: `p${Date.now()}`,
-      };
-      onChangeProducts(prev => [...prev, product]);
-      onAddNotification({
-        message: '상품이 추가되었습니다.',
-        type: 'success',
-      });
-    },
-    [onAddNotification],
-  );
 
-  const updateProduct = useCallback(
-    (productId: string, updates: Partial<ProductWithUI>) => {
-      onChangeProducts(prev =>
-        prev.map(product =>
-          product.id === productId ? { ...product, ...updates } : product,
-        ),
-      );
-      onAddNotification({
-        message: '상품이 수정되었습니다.',
-        type: 'success',
-      });
-    },
-    [onAddNotification],
-  );
 
-  const deleteProduct = useCallback(
-    (productId: string) => {
-      onChangeProducts(prev => prev.filter(p => p.id !== productId));
-      onAddNotification({
-        message: '상품이 삭제되었습니다.',
-        type: 'success',
-      });
-    },
-    [onAddNotification],
-  );
+
+
 
   const addCoupon = useCallback(
     (newCoupon: Coupon) => {
@@ -145,10 +106,10 @@ export function AdminPage({
   const handleProductSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (editingProduct && editingProduct !== 'new') {
-      updateProduct(editingProduct, productForm);
+      onUpdateProduct(editingProduct, productForm);
       setEditingProduct(null);
     } else {
-      addProduct({
+      onAddProduct({
         ...productForm,
         discounts: productForm.discounts,
       });
@@ -310,7 +271,7 @@ export function AdminPage({
                           수정
                         </button>
                         <button
-                          onClick={() => deleteProduct(product.id)}
+                          onClick={() => onDeleteProduct(product.id)}
                           className="text-red-600 hover:text-red-900"
                         >
                           삭제
@@ -322,6 +283,7 @@ export function AdminPage({
               </tbody>
             </table>
           </div>
+
           {showProductForm && (
             <div className="p-6 border-t border-gray-200 bg-gray-50">
               <form onSubmit={handleProductSubmit} className="space-y-4">

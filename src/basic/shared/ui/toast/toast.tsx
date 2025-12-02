@@ -2,7 +2,12 @@ import { useState } from 'react';
 
 type ToastType = 'error' | 'success' | 'warning';
 
-interface Notification {
+export interface ToastProps {
+  message: string;
+  type: ToastType;
+}
+
+interface Notification extends ToastProps {
   id: string;
   message: string;
   type: ToastType;
@@ -12,6 +17,7 @@ interface ToastProviderProps {
   notifications: Notification[];
   onClose: (id: string) => void;
 }
+
 
 export function ToastProvider({ notifications, onClose }: ToastProviderProps) {
   if (notifications.length === 0) return null;

@@ -5,8 +5,7 @@ import { ToastProvider, useToast } from './shared/ui/toast';
 import { Header } from './widgets/header.ui';
 import { AdminPage } from './pages/admin/page';
 import { CartPage } from './pages/cart/page';
-import { ProductWithUI } from './entities/product';
-import { INITIAL_PRODUCTS } from './entities/product/product-constants.config';
+import { useProducts } from './entities/product';
 import { INITIAL_COUPONS } from './entities/coupon';
 import { useLocalStorage } from './shared/hooks/use-local-storage';
 import { useDebounce } from './shared/hooks/use-debounce';
@@ -16,10 +15,7 @@ import { useDebounce } from './shared/hooks/use-debounce';
 const App = () => {
   const { notifications, addNotification, removeNotification } = useToast();
 
-  const [products, setProducts] = useLocalStorage<ProductWithUI[]>(
-    'products',
-    INITIAL_PRODUCTS,
-  );
+  const { products, addProduct, updateProduct, deleteProduct } = useProducts({ toast: addNotification });
 
   const [coupons, setCoupons] = useLocalStorage<Coupon[]>(
     'coupons',
@@ -35,11 +31,7 @@ const App = () => {
     setCart(callback);
   };
 
-  const handleChangeProducts = (
-    callback: (products: ProductWithUI[]) => ProductWithUI[],
-  ) => {
-    setProducts(callback);
-  };
+
 
   const handleChangeCoupons = (callback: (coupons: Coupon[]) => Coupon[]) => {
     setCoupons(callback);
@@ -71,7 +63,9 @@ const App = () => {
           <AdminPage
             products={products}
             coupons={coupons}
-            onChangeProducts={handleChangeProducts}
+            onAddProduct={addProduct}
+            onUpdateProduct={updateProduct}
+            onDeleteProduct={deleteProduct}
             onChangeCoupons={handleChangeCoupons}
             onAddNotification={addNotification}
           />
