@@ -1,12 +1,12 @@
 import { useState, useMemo } from 'react';
-import { CartItem, Coupon } from '../types';
+import { CartItem } from '../types';
 import { ToastProvider, useToast } from './shared/ui/toast';
 
 import { Header } from './widgets/header.ui';
 import { AdminPage } from './pages/admin/page';
 import { CartPage } from './pages/cart/page';
 import { useProducts } from './entities/product';
-import { INITIAL_COUPONS, useCoupons } from './entities/coupon';
+import { useCoupons } from './entities/coupon';
 import { useLocalStorage } from './shared/hooks/use-local-storage';
 import { useDebounce } from './shared/hooks/use-debounce';
 
@@ -15,10 +15,12 @@ import { useDebounce } from './shared/hooks/use-debounce';
 const App = () => {
   const { notifications, addNotification, removeNotification } = useToast();
 
-  const { products, addProduct, updateProduct, deleteProduct } = useProducts({ toast: addNotification });
-  const { coupons, addCoupon, removeCoupon } = useCoupons({ toast: addNotification });
-
-
+  const { products, addProduct, updateProduct, deleteProduct } = useProducts({
+    toast: addNotification,
+  });
+  const { coupons, addCoupon, removeCoupon } = useCoupons({
+    toast: addNotification,
+  });
 
   const [cart, setCart] = useLocalStorage<CartItem[]>('cart', []);
 
@@ -28,9 +30,6 @@ const App = () => {
   const handleChangeCart = (callback: (cart: CartItem[]) => CartItem[]) => {
     setCart(callback);
   };
-
-
-
 
   const debouncedSearchTerm = useDebounce(searchTerm, 500);
 

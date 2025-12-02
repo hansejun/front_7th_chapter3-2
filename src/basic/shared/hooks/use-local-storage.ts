@@ -13,7 +13,7 @@ function isEmpty<T>(value: T): boolean {
 
 export function useLocalStorage<T>(
   key: string,
-  initialValue: T,
+  initialValue: T
 ): [T, (value: T | ((prev: T) => T)) => void] {
   const [storedValue, setStoredValue] = useState<T>(() => {
     const item = LocalStorage.get<T>(key);
@@ -22,7 +22,7 @@ export function useLocalStorage<T>(
 
   const setValue = (value: T | ((prev: T) => T)) => {
     try {
-      setStoredValue(prev => {
+      setStoredValue((prev) => {
         const valueToStore = value instanceof Function ? value(prev) : value;
 
         // 빈 값이면 제거

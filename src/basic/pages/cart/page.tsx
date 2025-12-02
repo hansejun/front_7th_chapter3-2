@@ -47,7 +47,7 @@ export function CartPage({
 
   const formatPrice = (price: number, productId?: string): string => {
     if (productId) {
-      const product = products.find(p => p.id === productId);
+      const product = products.find((p) => p.id === productId);
       if (product && getRemainingStock(product) <= 0) {
         return 'SOLD OUT';
       }
@@ -66,7 +66,7 @@ export function CartPage({
         : maxDiscount;
     }, 0);
 
-    const hasBulkPurchase = cart.some(cartItem => cartItem.quantity >= 10);
+    const hasBulkPurchase = cart.some((cartItem) => cartItem.quantity >= 10);
     if (hasBulkPurchase) {
       return Math.min(baseDiscount + 0.05, 0.5); // 대량 구매 시 추가 5% 할인
     }
@@ -89,7 +89,7 @@ export function CartPage({
     let totalBeforeDiscount = 0;
     let totalAfterDiscount = 0;
 
-    cart.forEach(item => {
+    cart.forEach((item) => {
       const itemPrice = item.product.price * item.quantity;
       totalBeforeDiscount += itemPrice;
       totalAfterDiscount += calculateItemTotal(item);
@@ -99,11 +99,11 @@ export function CartPage({
       if (selectedCoupon.discountType === 'amount') {
         totalAfterDiscount = Math.max(
           0,
-          totalAfterDiscount - selectedCoupon.discountValue,
+          totalAfterDiscount - selectedCoupon.discountValue
         );
       } else {
         totalAfterDiscount = Math.round(
-          totalAfterDiscount * (1 - selectedCoupon.discountValue / 100),
+          totalAfterDiscount * (1 - selectedCoupon.discountValue / 100)
         );
       }
     }
@@ -115,7 +115,7 @@ export function CartPage({
   };
 
   const getRemainingStock = (product: Product): number => {
-    const cartItem = cart.find(item => item.product.id === product.id);
+    const cartItem = cart.find((item) => item.product.id === product.id);
     const remaining = product.stock - (cartItem?.quantity || 0);
 
     return remaining;
@@ -129,9 +129,9 @@ export function CartPage({
         return;
       }
 
-      onChangeCart(prevCart => {
+      onChangeCart((prevCart) => {
         const existingItem = prevCart.find(
-          item => item.product.id === product.id,
+          (item) => item.product.id === product.id
         );
 
         if (existingItem) {
@@ -145,10 +145,10 @@ export function CartPage({
             return prevCart;
           }
 
-          return prevCart.map(item =>
+          return prevCart.map((item) =>
             item.product.id === product.id
               ? { ...item, quantity: newQuantity }
-              : item,
+              : item
           );
         }
 
@@ -157,13 +157,13 @@ export function CartPage({
 
       onAddNotification({ message: '장바구니에 담았습니다', type: 'success' });
     },
-    [cart, onAddNotification, getRemainingStock],
+    [cart, onAddNotification, getRemainingStock]
   );
 
   const removeFromCart = useCallback((productId: string) => {
     console.log('productId', productId);
-    onChangeCart(prevCart =>
-      prevCart.filter(item => item.product.id !== productId),
+    onChangeCart((prevCart) =>
+      prevCart.filter((item) => item.product.id !== productId)
     );
   }, []);
 
@@ -174,7 +174,7 @@ export function CartPage({
         return;
       }
 
-      const product = products.find(p => p.id === productId);
+      const product = products.find((p) => p.id === productId);
       if (!product) return;
 
       const maxStock = product.stock;
@@ -186,15 +186,15 @@ export function CartPage({
         return;
       }
 
-      onChangeCart(prevCart =>
-        prevCart.map(item =>
+      onChangeCart((prevCart) =>
+        prevCart.map((item) =>
           item.product.id === productId
             ? { ...item, quantity: newQuantity }
-            : item,
-        ),
+            : item
+        )
       );
     },
-    [products, removeFromCart, onAddNotification, getRemainingStock],
+    [products, removeFromCart, onAddNotification, getRemainingStock]
   );
 
   const applyCoupon = useCallback(
@@ -212,7 +212,7 @@ export function CartPage({
       setSelectedCoupon(coupon);
       onAddNotification({ message: '쿠폰이 적용되었습니다.', type: 'success' });
     },
-    [onAddNotification, calculateCartTotal],
+    [onAddNotification, calculateCartTotal]
   );
 
   const completeOrder = useCallback(() => {
@@ -229,14 +229,14 @@ export function CartPage({
 
   const filteredProducts = debouncedSearchTerm
     ? products.filter(
-        product =>
+        (product) =>
           product.name
             .toLowerCase()
             .includes(debouncedSearchTerm.toLowerCase()) ||
           (product.description &&
             product.description
               .toLowerCase()
-              .includes(debouncedSearchTerm.toLowerCase())),
+              .includes(debouncedSearchTerm.toLowerCase()))
       )
     : products;
 
@@ -259,7 +259,7 @@ export function CartPage({
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {filteredProducts.map(product => {
+              {filteredProducts.map((product) => {
                 const remainingStock = getRemainingStock(product);
 
                 return (
@@ -292,7 +292,7 @@ export function CartPage({
                       {product.discounts.length > 0 && (
                         <span className="absolute top-2 left-2 bg-orange-500 text-white text-xs px-2 py-1 rounded">
                           ~
-                          {Math.max(...product.discounts.map(d => d.rate)) *
+                          {Math.max(...product.discounts.map((d) => d.rate)) *
                             100}
                           %
                         </span>
@@ -396,7 +396,7 @@ export function CartPage({
               </div>
             ) : (
               <div className="space-y-3">
-                {cart.map(item => {
+                {cart.map((item) => {
                   const itemTotal = calculateItemTotal(item);
                   const originalPrice = item.product.price * item.quantity;
                   const hasDiscount = itemTotal < originalPrice;
@@ -487,16 +487,16 @@ export function CartPage({
                   <select
                     className="w-full text-sm border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-blue-500"
                     value={selectedCoupon?.code || ''}
-                    onChange={e => {
+                    onChange={(e) => {
                       const coupon = coupons.find(
-                        c => c.code === e.target.value,
+                        (c) => c.code === e.target.value
                       );
                       if (coupon) applyCoupon(coupon);
                       else setSelectedCoupon(null);
                     }}
                   >
                     <option value="">쿠폰 선택</option>
-                    {coupons.map(coupon => (
+                    {coupons.map((coupon) => (
                       <option key={coupon.code} value={coupon.code}>
                         {coupon.name} (
                         {coupon.discountType === 'amount'

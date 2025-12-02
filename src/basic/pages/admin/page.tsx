@@ -43,7 +43,7 @@ export function AdminPage({
   onAddNotification,
 }: PropsType) {
   const [activeTab, setActiveTab] = useState<'products' | 'coupons'>(
-    'products',
+    'products'
   );
 
   const [showCouponForm, setShowCouponForm] = useState(false);
@@ -65,14 +65,6 @@ export function AdminPage({
     discountType: 'amount' as 'amount' | 'percentage',
     discountValue: 0,
   });
-
-
-
-
-
-
-
- 
 
   const handleProductSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -211,7 +203,7 @@ export function AdminPage({
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
                 {(activeTab === 'products' ? products : products).map(
-                  product => (
+                  (product) => (
                     <tr key={product.id} className="hover:bg-gray-50">
                       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                         {product.name}
@@ -225,8 +217,8 @@ export function AdminPage({
                             product.stock > 10
                               ? 'bg-green-100 text-green-800'
                               : product.stock > 0
-                              ? 'bg-yellow-100 text-yellow-800'
-                              : 'bg-red-100 text-red-800'
+                                ? 'bg-yellow-100 text-yellow-800'
+                                : 'bg-red-100 text-red-800'
                           }`}
                         >
                           {product.stock}개
@@ -250,7 +242,7 @@ export function AdminPage({
                         </button>
                       </td>
                     </tr>
-                  ),
+                  )
                 )}
               </tbody>
             </table>
@@ -270,7 +262,7 @@ export function AdminPage({
                     <input
                       type="text"
                       value={productForm.name}
-                      onChange={e =>
+                      onChange={(e) =>
                         setProductForm({
                           ...productForm,
                           name: e.target.value,
@@ -287,7 +279,7 @@ export function AdminPage({
                     <input
                       type="text"
                       value={productForm.description}
-                      onChange={e =>
+                      onChange={(e) =>
                         setProductForm({
                           ...productForm,
                           description: e.target.value,
@@ -303,7 +295,7 @@ export function AdminPage({
                     <input
                       type="text"
                       value={productForm.price === 0 ? '' : productForm.price}
-                      onChange={e => {
+                      onChange={(e) => {
                         const value = e.target.value;
                         if (value === '' || /^\d+$/.test(value)) {
                           setProductForm({
@@ -312,7 +304,7 @@ export function AdminPage({
                           });
                         }
                       }}
-                      onBlur={e => {
+                      onBlur={(e) => {
                         const value = e.target.value;
                         if (value === '') {
                           setProductForm({ ...productForm, price: 0 });
@@ -336,7 +328,7 @@ export function AdminPage({
                     <input
                       type="text"
                       value={productForm.stock === 0 ? '' : productForm.stock}
-                      onChange={e => {
+                      onChange={(e) => {
                         const value = e.target.value;
                         if (value === '' || /^\d+$/.test(value)) {
                           setProductForm({
@@ -345,7 +337,7 @@ export function AdminPage({
                           });
                         }
                       }}
-                      onBlur={e => {
+                      onBlur={(e) => {
                         const value = e.target.value;
                         if (value === '') {
                           setProductForm({ ...productForm, stock: 0 });
@@ -384,7 +376,7 @@ export function AdminPage({
                         <input
                           type="number"
                           value={discount.quantity}
-                          onChange={e => {
+                          onChange={(e) => {
                             const newDiscounts = [...productForm.discounts];
                             newDiscounts[index].quantity =
                               parseInt(e.target.value) || 0;
@@ -401,7 +393,7 @@ export function AdminPage({
                         <input
                           type="number"
                           value={discount.rate * 100}
-                          onChange={e => {
+                          onChange={(e) => {
                             const newDiscounts = [...productForm.discounts];
                             newDiscounts[index].rate =
                               (parseInt(e.target.value) || 0) / 100;
@@ -420,7 +412,7 @@ export function AdminPage({
                           type="button"
                           onClick={() => {
                             const newDiscounts = productForm.discounts.filter(
-                              (_, i) => i !== index,
+                              (_, i) => i !== index
                             );
                             setProductForm({
                               ...productForm,
@@ -499,7 +491,7 @@ export function AdminPage({
           </div>
           <div className="p-6">
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {coupons.map(coupon => (
+              {coupons.map((coupon) => (
                 <div
                   key={coupon.code}
                   className="relative bg-gradient-to-r from-indigo-50 to-purple-50 rounded-lg p-4 border border-indigo-200"
@@ -579,7 +571,7 @@ export function AdminPage({
                       <input
                         type="text"
                         value={couponForm.name}
-                        onChange={e =>
+                        onChange={(e) =>
                           setCouponForm({
                             ...couponForm,
                             name: e.target.value,
@@ -597,7 +589,7 @@ export function AdminPage({
                       <input
                         type="text"
                         value={couponForm.code}
-                        onChange={e =>
+                        onChange={(e) =>
                           setCouponForm({
                             ...couponForm,
                             code: e.target.value.toUpperCase(),
@@ -614,7 +606,7 @@ export function AdminPage({
                       </label>
                       <select
                         value={couponForm.discountType}
-                        onChange={e =>
+                        onChange={(e) =>
                           setCouponForm({
                             ...couponForm,
                             discountType: e.target.value as
@@ -641,7 +633,7 @@ export function AdminPage({
                             ? ''
                             : couponForm.discountValue
                         }
-                        onChange={e => {
+                        onChange={(e) => {
                           const value = e.target.value;
                           if (value === '' || /^\d+$/.test(value)) {
                             setCouponForm({
@@ -650,7 +642,7 @@ export function AdminPage({
                             });
                           }
                         }}
-                        onBlur={e => {
+                        onBlur={(e) => {
                           const value = parseInt(e.target.value) || 0;
                           if (couponForm.discountType === 'percentage') {
                             if (value > 100) {

@@ -20,7 +20,7 @@ function set<T>(key: string, value: T): boolean {
     // 용량 초과 에러 처리
     if (error instanceof DOMException && error.name === 'QuotaExceededError') {
       console.error(
-        `localStorage 용량 초과 (key: "${key}"). 이전 데이터를 삭제해주세요.`,
+        `localStorage 용량 초과 (key: "${key}"). 이전 데이터를 삭제해주세요.`
       );
     } else {
       console.error(`localStorage 저장 실패 (key: "${key}"):`, error);

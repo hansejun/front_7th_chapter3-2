@@ -15,8 +15,6 @@
 
 // import { Discount } from '../../../types';
 
-
-
 import { useLocalStorage } from '../../shared/hooks/use-local-storage';
 import { ToastProps } from '../../shared/ui/toast';
 import {
@@ -29,22 +27,21 @@ interface UseProductsProps {
   toast: (notification: ToastProps) => void;
 }
 
-
 // TODO: model 분리 및 features 분리
 export function useProducts({ toast }: UseProductsProps) {
   const [products, setProducts] = useLocalStorage<ProductWithUI[]>(
     PRODUCT_STORAGE_KEY,
-    INITIAL_PRODUCTS,
+    INITIAL_PRODUCTS
   );
 
   /** 새 상품 추가 */
   const addProduct = (newProduct: Omit<ProductWithUI, 'id'>) => {
-        const product: ProductWithUI = {
-        ...newProduct,
-        id: `p${Date.now()}`,
-        };
-    
-    setProducts(prev => [...prev, product]);
+    const product: ProductWithUI = {
+      ...newProduct,
+      id: `p${Date.now()}`,
+    };
+
+    setProducts((prev) => [...prev, product]);
 
     toast({
       message: '상품이 추가되었습니다.',
@@ -53,11 +50,14 @@ export function useProducts({ toast }: UseProductsProps) {
   };
 
   /** 상품 정보 수정 */
-  const updateProduct = (productId: string, updates: Partial<ProductWithUI>) => {
-    setProducts(prev =>
-      prev.map(product =>
-        product.id === productId ? { ...product, ...updates } : product,
-      ),
+  const updateProduct = (
+    productId: string,
+    updates: Partial<ProductWithUI>
+  ) => {
+    setProducts((prev) =>
+      prev.map((product) =>
+        product.id === productId ? { ...product, ...updates } : product
+      )
     );
 
     toast({
@@ -68,14 +68,13 @@ export function useProducts({ toast }: UseProductsProps) {
 
   /** 상품 삭제 */
   const deleteProduct = (productId: string) => {
-    setProducts(prev => prev.filter(p => p.id !== productId));
+    setProducts((prev) => prev.filter((p) => p.id !== productId));
 
     toast({
       message: '상품이 삭제되었습니다.',
       type: 'success',
     });
   };
-
 
   // /** 상품 재고 수정 */
   // const updateProductStock = (productId: string, stock: number) => {

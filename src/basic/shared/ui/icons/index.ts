@@ -10,4 +10,4 @@
 // - CheckIcon: 체크 아이콘
 
 // TODO: 구현
-export { }
+export {};
