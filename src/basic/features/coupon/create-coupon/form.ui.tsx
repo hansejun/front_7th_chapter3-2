@@ -93,6 +93,7 @@ export function CreateCouponForm({
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
+              {/* REFACTOR */}
               {couponForm.discountType === 'amount' ? '할인 금액' : '할인율(%)'}
             </label>
             <input
@@ -148,6 +149,7 @@ export function CreateCouponForm({
                 }
               }}
               className="w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 px-3 py-2 border text-sm"
+              // REFACTOR
               placeholder={couponForm.discountType === 'amount' ? '5000' : '10'}
               required
             />

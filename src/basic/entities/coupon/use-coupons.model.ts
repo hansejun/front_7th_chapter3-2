@@ -19,19 +19,10 @@ export function useCoupons({ toast }: UseCouponsProps) {
     const existingCoupon = coupons.find((c) => c.code === coupon.code);
 
     if (existingCoupon) {
-      toast({
-        message: '이미 존재하는 쿠폰 코드입니다.',
-        type: 'error',
-      });
-      return;
+      throw new Error('이미 존재하는 쿠폰 코드입니다.');
     }
 
     setCoupons((prev) => [...prev, coupon]);
-
-    toast({
-      message: '쿠폰이 추가되었습니다.',
-      type: 'success',
-    });
   };
 
   /** 쿠폰 삭제 */
