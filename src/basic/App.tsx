@@ -43,13 +43,13 @@ const App = () => {
         <AdminPage
           products={products}
           coupons={coupons}
+          toast={addNotification}
           onAddProduct={addProduct}
           onUpdateProduct={updateProduct}
           onDeleteProduct={deleteProduct}
           onAddCoupon={addCoupon}
           onRemoveCoupon={removeCoupon}
           onToggleAdmin={() => setIsAdmin(!isAdmin)}
-          toast={addNotification}
         />
       ) : (
         <CartPage
@@ -57,7 +57,7 @@ const App = () => {
           products={products}
           coupons={coupons}
           selectedCoupon={selectedCoupon}
-          onAddNotification={addNotification}
+          toast={addNotification}
           onAddToCart={addToCart}
           onRemoveFromCart={removeFromCart}
           onUpdateQuantity={updateQuantity}
