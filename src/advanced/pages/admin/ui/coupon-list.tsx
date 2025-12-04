@@ -4,6 +4,7 @@ import {
   useCoupons,
 } from '../../../entities/coupon';
 import { useDeleteCoupon } from '../../../features/coupon/delete-coupon/use-delete-coupon';
+import { PlusIcon } from '../../../shared/ui/icons';
 
 interface CouponListProps {
   onToggleShowCouponForm: () => void;
@@ -31,19 +32,7 @@ export function CouponList({ onToggleShowCouponForm }: CouponListProps) {
           onClick={onToggleShowCouponForm}
           className="text-gray-400 hover:text-gray-600 flex flex-col items-center"
         >
-          <svg
-            className="w-8 h-8"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M12 4v16m8-8H4"
-            />
-          </svg>
+          <PlusIcon />
           <p className="mt-2 text-sm font-medium">새 쿠폰 추가</p>
         </button>
       </div>
