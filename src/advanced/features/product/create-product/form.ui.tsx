@@ -1,15 +1,13 @@
-import { ProductWithUI } from '../../../entities/product';
 import { useCreateProduct } from './use-create-product';
 import { XIcon } from '../../../shared/ui/icons';
 import { Button } from '../../../shared/ui/button';
+import { Input } from '../../../shared/ui/input';
 
 interface CreateProductFormProps {
-  addProduct: (newProduct: Omit<ProductWithUI, 'id'>) => void;
   onCloseProductForm: () => void;
 }
 
 export function CreateProductForm({
-  addProduct,
   onCloseProductForm,
 }: CreateProductFormProps) {
   const {
@@ -36,11 +34,10 @@ export function CreateProductForm({
             <label className="block text-sm font-medium text-gray-700 mb-1">
               상품명
             </label>
-            <input
+            <Input
               type="text"
               value={form.name}
               onChange={onChangeName}
-              className="w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 px-3 py-2 border"
               required
             />
           </div>
@@ -48,23 +45,21 @@ export function CreateProductForm({
             <label className="block text-sm font-medium text-gray-700 mb-1">
               설명
             </label>
-            <input
+            <Input
               type="text"
               value={form.description}
               onChange={onChangeDescription}
-              className="w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 px-3 py-2 border"
             />
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
               가격
             </label>
-            <input
+            <Input
               type="text"
               value={form.price === 0 ? '' : form.price}
               onChange={onChangePrice}
               onBlur={onBlurPrice}
-              className="w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 px-3 py-2 border"
               placeholder="숫자만 입력"
               required
             />
@@ -73,12 +68,11 @@ export function CreateProductForm({
             <label className="block text-sm font-medium text-gray-700 mb-1">
               재고
             </label>
-            <input
+            <Input
               type="text"
               value={form.stock === 0 ? '' : form.stock}
               onChange={onChangeStock}
               onBlur={onBlurStock}
-              className="w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 px-3 py-2 border"
               placeholder="숫자만 입력"
               required
             />
@@ -94,22 +88,22 @@ export function CreateProductForm({
                 key={index}
                 className="flex items-center gap-2 bg-gray-50 p-2 rounded"
               >
-                <input
+                <Input
                   type="number"
+                  size="sm"
                   value={discount.quantity}
                   onChange={onChangeDiscountQuantity(index)}
-                  className="w-20 px-2 py-1 border rounded"
-                  min="1"
+                  min={1}
                   placeholder="수량"
                 />
                 <span className="text-sm">개 이상 구매 시</span>
-                <input
+                <Input
                   type="number"
+                  size="xs"
                   value={discount.rate * 100}
                   onChange={onChangeDiscountRate(index)}
-                  className="w-16 px-2 py-1 border rounded"
-                  min="0"
-                  max="100"
+                  min={0}
+                  max={100}
                   placeholder="%"
                 />
                 <span className="text-sm">% 할인</span>
