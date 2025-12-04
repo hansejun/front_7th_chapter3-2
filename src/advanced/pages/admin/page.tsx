@@ -4,13 +4,9 @@ import { CouponsSection } from './ui/coupon-section';
 import { Layout } from '../../widgets/layout.ui';
 import { AdminHeader } from '../../widgets/admin-header.ui';
 
-interface PropsType {
-  onToggleAdmin: () => void;
-}
-
-export function AdminPage({ onToggleAdmin }: PropsType) {
+export function AdminPage() {
   return (
-    <Layout header={<AdminHeader onToggleAdmin={onToggleAdmin} />}>
+    <Layout header={<AdminHeader />}>
       <div className="max-w-6xl mx-auto">
         <div className="mb-8">
           <h1 className="text-2xl font-bold text-gray-900">관리자 대시보드</h1>

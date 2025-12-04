@@ -1,16 +1,17 @@
+import { useAdmin } from '../shared/hooks/use-admin';
+
 interface PropsType {
   searchTerm: string;
   totalItemCount: number;
-  onToggleAdmin: () => void;
   onChangeSearchTerm: (value: string) => void;
 }
 
 export function Header({
   searchTerm,
   totalItemCount,
-  onToggleAdmin,
   onChangeSearchTerm,
 }: PropsType) {
+  const { toggleAdmin } = useAdmin();
   return (
     <header className="bg-white shadow-sm sticky top-0 z-40 border-b">
       <div className="max-w-7xl mx-auto px-4">
@@ -32,7 +33,7 @@ export function Header({
 
           <nav className="flex items-center space-x-4">
             <button
-              onClick={onToggleAdmin}
+              onClick={toggleAdmin}
               className="px-3 py-1.5 text-sm rounded transition-colors text-gray-600 hover:text-gray-900"
             >
               관리자 페이지로

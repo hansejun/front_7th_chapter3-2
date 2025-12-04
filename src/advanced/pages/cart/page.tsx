@@ -16,11 +16,7 @@ import { CouponList } from './ui/coupon-list';
 import { useOrderCart } from '../../features/cart/order-cart';
 import { useCoupons } from '../../entities/coupon';
 
-interface PropsType {
-  onToggleAdmin: () => void;
-}
-
-export function CartPage({ onToggleAdmin }: PropsType) {
+export function CartPage() {
   const { coupons } = useCoupons();
   const { products } = useProducts();
   const { cart, selectedCoupon } = useCart();
@@ -44,7 +40,6 @@ export function CartPage({ onToggleAdmin }: PropsType) {
         <Header
           searchTerm={searchTerm}
           totalItemCount={totalItemCount}
-          onToggleAdmin={onToggleAdmin}
           onChangeSearchTerm={setSearchTerm}
         />
       }
