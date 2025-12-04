@@ -1,4 +1,3 @@
-// 7. getRemainingStock(product, cart): 남은 재고 계산
 import { CartItem, Coupon, Product } from '../../../../types';
 import { ProductWithUI } from '../../product';
 
