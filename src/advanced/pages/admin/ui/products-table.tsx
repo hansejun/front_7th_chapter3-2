@@ -1,6 +1,7 @@
 import { ProductWithUI, useProducts } from '../../../entities/product';
 import { mapProductToViewModel } from '../../../entities/product/model/product-view-mapper';
 import { useDeleteProduct } from '../../../features/product/delete-product';
+import { Button } from '../../../shared/ui/button';
 
 interface ProductsTableProps {
   onOpenProductForm: (product: ProductWithUI) => void;
@@ -53,18 +54,19 @@ export function ProductsTable({ onOpenProductForm }: ProductsTableProps) {
                 {viewModel.description || '-'}
               </td>
               <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                <button
+                <Button
+                  variant="link"
                   onClick={() => onOpenProductForm(product)}
                   className="text-indigo-600 hover:text-indigo-900 mr-3"
                 >
                   수정
-                </button>
-                <button
+                </Button>
+                <Button
+                  variant="danger"
                   onClick={() => onDeleteProduct(product.id)}
-                  className="text-red-600 hover:text-red-900"
                 >
                   삭제
-                </button>
+                </Button>
               </td>
             </tr>
           );

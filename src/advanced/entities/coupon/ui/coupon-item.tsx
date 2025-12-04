@@ -1,5 +1,6 @@
 import { CouponViewModel } from '../model/coupon-view-model';
 import { TrashIcon } from '../../../shared/ui/icons';
+import { Button } from '../../../shared/ui/button';
 
 interface CouponItemProps {
   coupon: CouponViewModel;
@@ -22,12 +23,13 @@ export function CouponItem({ coupon, onDeleteCoupon }: CouponItemProps) {
             </span>
           </div>
         </div>
-        <button
+        <Button
+          variant="ghost"
           onClick={onDeleteCoupon}
-          className="text-gray-400 hover:text-red-600 transition-colors"
+          className="text-gray-400 hover:text-red-600"
         >
           <TrashIcon />
-        </button>
+        </Button>
       </div>
     </div>
   );

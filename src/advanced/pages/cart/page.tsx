@@ -16,6 +16,7 @@ import { CouponList } from './ui/coupon-list';
 import { useOrderCart } from '../../features/cart/order-cart';
 import { useCoupons } from '../../entities/coupon';
 import { ShoppingCartIcon } from '../../shared/ui/icons';
+import { Button } from '../../shared/ui/button';
 
 export function CartPage() {
   const { coupons } = useCoupons();
@@ -91,9 +92,12 @@ export function CartPage() {
                   <h3 className="text-sm font-semibold text-gray-700">
                     쿠폰 할인
                   </h3>
-                  <button className="text-xs text-blue-600 hover:underline">
+                  <Button
+                    variant="link"
+                    className="text-xs text-blue-600 hover:underline"
+                  >
                     쿠폰 등록
-                  </button>
+                  </Button>
                 </div>
                 <ConditionalRender condition={coupons.length > 0}>
                   <CouponList coupons={coupons} />
@@ -131,12 +135,9 @@ export function CartPage() {
                   </div>
                 </div>
 
-                <button
-                  onClick={onOrderCart}
-                  className="w-full mt-4 py-3 bg-yellow-400 text-gray-900 rounded-md font-medium hover:bg-yellow-500 transition-colors"
-                >
+                <Button variant="warning" fullWidth onClick={onOrderCart}>
                   {totals.totalAfterDiscount.toLocaleString()}원 결제하기
-                </button>
+                </Button>
 
                 <div className="mt-3 text-xs text-gray-500 text-center">
                   <p>* 실제 결제는 이루어지지 않습니다</p>

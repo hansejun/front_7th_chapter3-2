@@ -1,5 +1,6 @@
 import { ProductViewModel } from '../model/product-view-model';
 import { ImageIcon } from '../../../shared/ui/icons';
+import { Button } from '../../../shared/ui/button';
 
 interface PropsType {
   viewModel: ProductViewModel;
@@ -62,17 +63,19 @@ export function ProductCard({ viewModel, onAddCart }: PropsType) {
         </div>
 
         {/* 장바구니 버튼 */}
-        <button
+        <Button
+          variant="dark"
+          fullWidth
           onClick={onAddCart}
           disabled={viewModel.isAddToCartDisabled}
-          className={`w-full py-2 px-4 rounded-md font-medium transition-colors ${
+          className={
             viewModel.isAddToCartDisabled
               ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
-              : 'bg-gray-900 text-white hover:bg-gray-800'
-          }`}
+              : ''
+          }
         >
           {viewModel.buttonText}
-        </button>
+        </Button>
       </div>
     </div>
   );

@@ -1,6 +1,7 @@
 import { ProductWithUI } from '../../../entities/product';
 import { useCreateProduct } from './use-create-product';
 import { XIcon } from '../../../shared/ui/icons';
+import { Button } from '../../../shared/ui/button';
 
 interface CreateProductFormProps {
   addProduct: (newProduct: Omit<ProductWithUI, 'id'>) => void;
@@ -112,39 +113,39 @@ export function CreateProductForm({
                   placeholder="%"
                 />
                 <span className="text-sm">% 할인</span>
-                <button
+                <Button
+                  variant="ghost"
+                  size="icon"
                   type="button"
                   onClick={onRemoveDiscount(index)}
                   className="text-red-600 hover:text-red-800"
                 >
                   <XIcon />
-                </button>
+                </Button>
               </div>
             ))}
-            <button
+            <Button
+              variant="link"
               type="button"
               onClick={onAddDiscount}
               className="text-sm text-indigo-600 hover:text-indigo-800"
             >
               + 할인 추가
-            </button>
+            </Button>
           </div>
         </div>
 
         <div className="flex justify-end gap-3">
-          <button
+          <Button
+            variant="secondary"
             type="button"
-            className="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50"
             onClick={onCloseProductForm}
           >
             취소
-          </button>
-          <button
-            type="submit"
-            className="px-4 py-2 bg-indigo-600 text-white rounded-md text-sm font-medium hover:bg-indigo-700"
-          >
+          </Button>
+          <Button variant="primary" type="submit">
             추가
-          </button>
+          </Button>
         </div>
       </form>
     </div>

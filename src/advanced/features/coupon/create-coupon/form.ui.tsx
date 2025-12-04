@@ -1,4 +1,5 @@
 import { useCreateCoupon } from './use-create-coupon';
+import { Button } from '../../../shared/ui/button';
 
 interface CreateCouponFormProps {
   onCloseCouponForm: () => void;
@@ -79,19 +80,12 @@ export function CreateCouponForm({ onCloseCouponForm }: CreateCouponFormProps) {
           </div>
         </div>
         <div className="flex justify-end gap-3">
-          <button
-            type="button"
-            onClick={onCloseCouponForm}
-            className="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50"
-          >
+          <Button variant="secondary" type="button" onClick={onCloseCouponForm}>
             취소
-          </button>
-          <button
-            type="submit"
-            className="px-4 py-2 bg-indigo-600 text-white rounded-md text-sm font-medium hover:bg-indigo-700"
-          >
+          </Button>
+          <Button variant="primary" type="submit">
             쿠폰 생성
-          </button>
+          </Button>
         </div>
       </form>
     </div>

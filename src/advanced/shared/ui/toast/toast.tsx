@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { XIcon } from '../icons';
+import { Button } from '../button';
 
 type ToastType = 'error' | 'success' | 'warning';
 
@@ -38,12 +39,14 @@ export function ToastProvider({ notifications, onClose }: ToastProviderProps) {
           }`}
         >
           <span className="mr-2">{notif.message}</span>
-          <button
+          <Button
+            variant="ghost"
+            size="icon"
             onClick={() => onClose(notif.id)}
             className="text-white hover:text-gray-200"
           >
             <XIcon />
-          </button>
+          </Button>
         </div>
       ))}
     </div>

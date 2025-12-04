@@ -1,6 +1,7 @@
 import { CartItem as CartItemType } from '../../../../types';
 import { formatPrice } from '../../../shared/lib/formatters';
 import { XIcon } from '../../../shared/ui/icons';
+import { Button } from '../../../shared/ui/button';
 
 interface CartItemProps {
   item: CartItemType;
@@ -27,30 +28,36 @@ export function CartItem({
         <h4 className="text-sm font-medium text-gray-900 flex-1">
           {item.product.name}
         </h4>
-        <button
+        <Button
+          variant="ghost"
+          size="icon"
           onClick={onDeleteCart}
           className="text-gray-400 hover:text-red-500 ml-2"
         >
           <XIcon />
-        </button>
+        </Button>
       </div>
       <div className="flex items-center justify-between">
         <div className="flex items-center">
-          <button
+          <Button
+            variant="ghost"
+            size="icon"
             onClick={onDecreaseQuantity}
-            className="w-6 h-6 rounded border border-gray-300 flex items-center justify-center hover:bg-gray-100"
+            className="border border-gray-300"
           >
             <span className="text-xs">−</span>
-          </button>
+          </Button>
           <span className="mx-3 text-sm font-medium w-8 text-center">
             {item.quantity}
           </span>
-          <button
+          <Button
+            variant="ghost"
+            size="icon"
             onClick={onIncreaseQuantity}
-            className="w-6 h-6 rounded border border-gray-300 flex items-center justify-center hover:bg-gray-100"
+            className="border border-gray-300"
           >
             <span className="text-xs">+</span>
-          </button>
+          </Button>
         </div>
         <div className="text-right">
           {hasDiscount && (

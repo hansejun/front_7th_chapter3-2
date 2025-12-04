@@ -1,4 +1,5 @@
 import { useAdmin } from '../shared/hooks/use-admin';
+import { Button } from '../shared/ui/button';
 
 export function AdminHeader() {
   const { toggleAdmin } = useAdmin();
@@ -11,12 +12,9 @@ export function AdminHeader() {
           </div>
 
           <nav className="flex items-center space-x-4">
-            <button
-              onClick={toggleAdmin}
-              className="px-3 py-1.5 text-sm rounded transition-colors bg-gray-800 text-white"
-            >
+            <Button variant="dark" size="sm" onClick={toggleAdmin}>
               쇼핑몰로 돌아가기
-            </button>
+            </Button>
           </nav>
         </div>
       </div>

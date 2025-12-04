@@ -1,5 +1,6 @@
 import { useAdmin } from '../shared/hooks/use-admin';
 import { ShoppingCartIcon } from '../shared/ui/icons';
+import { Button } from '../shared/ui/button';
 
 interface PropsType {
   searchTerm: string;
@@ -32,12 +33,14 @@ export function Header({
           </div>
 
           <nav className="flex items-center space-x-4">
-            <button
+            <Button
+              variant="ghost"
+              size="sm"
               onClick={toggleAdmin}
-              className="px-3 py-1.5 text-sm rounded transition-colors text-gray-600 hover:text-gray-900"
+              className="text-gray-600 hover:text-gray-900"
             >
               관리자 페이지로
-            </button>
+            </Button>
 
             <div className="relative">
               <ShoppingCartIcon
