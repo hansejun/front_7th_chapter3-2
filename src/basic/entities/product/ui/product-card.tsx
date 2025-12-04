@@ -1,16 +1,11 @@
-import { ProductWithUI } from '../model/product-interface';
+import { ProductViewModel } from '../model/product-view-model';
 
 interface PropsType {
-  product: ProductWithUI;
-  remainingStock: number;
+  viewModel: ProductViewModel;
   onAddCart: () => void;
 }
 
-export function ProductCard({ product, remainingStock, onAddCart }: PropsType) {
-  // REFACTOR
-  const formattedPrice =
-    remainingStock <= 0 ? 'SOLD OUT' : `₩${product.price.toLocaleString()}`;
-
+export function ProductCard({ viewModel, onAddCart }: PropsType) {
   return (
     <div className="bg-white rounded-lg border border-gray-200 overflow-hidden hover:shadow-lg transition-shadow">
       {/* 상품 이미지 영역 (placeholder) */}
@@ -30,65 +25,64 @@ export function ProductCard({ product, remainingStock, onAddCart }: PropsType) {
             />
           </svg>
         </div>
-        {product.isRecommended && (
+        {viewModel.isRecommended && (
           <span className="absolute top-2 right-2 bg-red-500 text-white text-xs px-2 py-1 rounded">
             BEST
           </span>
         )}
-        {product.discounts.length > 0 && (
+        {viewModel.maxDiscountBadge && (
           <span className="absolute top-2 left-2 bg-orange-500 text-white text-xs px-2 py-1 rounded">
-            {/* REFACTOR */}~
-            {Math.max(...product.discounts.map((d) => d.rate)) * 100}%
+            {viewModel.maxDiscountBadge}
           </span>
         )}
       </div>
 
       {/* 상품 정보 */}
       <div className="p-4">
-        <h3 className="font-medium text-gray-900 mb-1">{product.name}</h3>
-        {product.description && (
+        <h3 className="font-medium text-gray-900 mb-1">{viewModel.name}</h3>
+        {viewModel.description && (
           <p className="text-sm text-gray-500 mb-2 line-clamp-2">
-            {product.description}
+            {viewModel.description}
           </p>
         )}
 
         {/* 가격 정보 */}
         <div className="mb-3">
-          <p className="text-lg font-bold text-gray-900">{formattedPrice}</p>
-          {product.discounts.length > 0 && (
+          <p className="text-lg font-bold text-gray-900">
+            {viewModel.displayPrice}
+          </p>
+          {viewModel.firstDiscountMessage && (
             <p className="text-xs text-gray-500">
-              {/* REFACTOR */}
-              {product.discounts[0].quantity}개 이상 구매시 할인{' '}
-              {product.discounts[0].rate * 100}%
+              {viewModel.firstDiscountMessage}
             </p>
           )}
         </div>
 
         {/* 재고 상태 */}
         <div className="mb-3">
-          {/* REFACTOR */}
-          {remainingStock <= 5 && remainingStock > 0 && (
+          {viewModel.stockStatus.status === 'low' && (
             <p className="text-xs text-red-600 font-medium">
-              품절임박! {remainingStock}개 남음
+              {viewModel.stockStatus.displayText}
             </p>
           )}
-          {remainingStock > 5 && (
-            <p className="text-xs text-gray-500">재고 {remainingStock}개</p>
+          {viewModel.stockStatus.status === 'sufficient' && (
+            <p className="text-xs text-gray-500">
+              {viewModel.stockStatus.displayText}
+            </p>
           )}
         </div>
 
         {/* 장바구니 버튼 */}
-        {/* REFACTOR */}
         <button
           onClick={onAddCart}
-          disabled={remainingStock <= 0}
+          disabled={viewModel.isAddToCartDisabled}
           className={`w-full py-2 px-4 rounded-md font-medium transition-colors ${
-            remainingStock <= 0
+            viewModel.isAddToCartDisabled
               ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
               : 'bg-gray-900 text-white hover:bg-gray-800'
           }`}
         >
-          {remainingStock <= 0 ? '품절' : '장바구니 담기'}
+          {viewModel.buttonText}
         </button>
       </div>
     </div>

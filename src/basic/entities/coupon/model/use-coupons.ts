@@ -1,35 +1,47 @@
+import { useCallback, useEffect, useReducer } from 'react';
 import { Coupon } from '../../../../types';
 import { useLocalStorage } from '../../../shared/hooks/use-local-storage';
 import {
   COUPON_STORAGE_KEY,
   INITIAL_COUPONS,
 } from '../config/coupon-constants';
+import { couponReducer, initialCouponState } from './coupon-reducer';
+import { couponActions, validateAddCoupon } from './coupon-actions';
 
-// TODO: model 분리 및 features 분리 > toast는 features에서 처리
 export function useCoupons() {
-  const [coupons, setCoupons] = useLocalStorage<Coupon[]>(
+  // LocalStorage에서 초기 쿠폰 로드
+  const [persistedCoupons, setPersistedCoupons] = useLocalStorage<Coupon[]>(
     COUPON_STORAGE_KEY,
     INITIAL_COUPONS
   );
 
+  // Reducer로 상태 관리
+  const [state, dispatch] = useReducer(couponReducer, {
+    ...initialCouponState,
+    items: persistedCoupons,
+  });
+
+  // LocalStorage 동기화
+  useEffect(() => {
+    setPersistedCoupons(state.items);
+  }, [state.items, setPersistedCoupons]);
+
   /** 쿠폰 추가 */
-  const addCoupon = (coupon: Coupon) => {
-    const existingCoupon = coupons.find((c) => c.code === coupon.code);
-
-    // CHECK:  상태의 연결을 담당하는 곳에서 처리하는게 맞는건가?
-    if (existingCoupon) {
-      throw new Error('이미 존재하는 쿠폰 코드입니다.');
-    }
-
-    setCoupons((prev) => [...prev, coupon]);
-  };
+  const addCoupon = useCallback(
+    (coupon: Coupon) => {
+      validateAddCoupon(state, coupon);
+      dispatch(couponActions.addCoupon(coupon));
+    },
+    [state]
+  );
 
   /** 쿠폰 삭제 */
-  const removeCoupon = (couponCode: string) => {
-    setCoupons((prev) => prev.filter((c) => c.code !== couponCode));
-  };
+  const removeCoupon = useCallback((couponCode: string) => {
+    dispatch(couponActions.removeCoupon(couponCode));
+  }, []);
+
   return {
-    coupons,
+    coupons: state.items,
     addCoupon,
     removeCoupon,
   };

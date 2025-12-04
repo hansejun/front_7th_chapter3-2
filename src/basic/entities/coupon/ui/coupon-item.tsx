@@ -1,7 +1,7 @@
-import { Coupon } from '../../../../types';
+import { CouponViewModel } from '../model/coupon-view-model';
 
 interface CouponItemProps {
-  coupon: Coupon;
+  coupon: CouponViewModel;
   onDeleteCoupon: () => void;
 }
 
@@ -17,10 +17,7 @@ export function CouponItem({ coupon, onDeleteCoupon }: CouponItemProps) {
           <p className="text-sm text-gray-600 mt-1 font-mono">{coupon.code}</p>
           <div className="mt-2">
             <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-white text-indigo-700">
-              {/* REFACTOR */}
-              {coupon.discountType === 'amount'
-                ? `${coupon.discountValue.toLocaleString()}원 할인`
-                : `${coupon.discountValue}% 할인`}
+              {coupon.discountText}
             </span>
           </div>
         </div>

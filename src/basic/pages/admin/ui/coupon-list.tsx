@@ -1,5 +1,5 @@
 import { Coupon } from '../../../../types';
-import { CouponItem } from '../../../entities/coupon';
+import { CouponItem, mapCouponToViewModel } from '../../../entities/coupon';
 import { useDeleteCoupon } from '../../../features/coupon/delete-coupon/use-delete-coupon';
 import { ToastProps } from '../../../shared/ui/toast';
 
@@ -19,13 +19,17 @@ export function CouponList({
   const { onDeleteCoupon } = useDeleteCoupon({ removeCoupon, toast });
   return (
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-      {coupons.map((coupon) => (
-        <CouponItem
-          key={coupon.code}
-          coupon={coupon}
-          onDeleteCoupon={() => onDeleteCoupon(coupon.code)}
-        />
-      ))}
+      {coupons.map((coupon) => {
+        const viewModel = mapCouponToViewModel(coupon);
+
+        return (
+          <CouponItem
+            key={coupon.code}
+            coupon={viewModel}
+            onDeleteCoupon={() => onDeleteCoupon(coupon.code)}
+          />
+        );
+      })}
 
       <div className="border-2 border-dashed border-gray-300 rounded-lg p-4 flex items-center justify-center hover:border-gray-400 transition-colors">
         <button

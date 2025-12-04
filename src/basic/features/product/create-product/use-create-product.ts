@@ -5,7 +5,6 @@ import { ToastProps } from '../../../shared/ui/toast';
 interface PropsType {
   addProduct: (newProduct: Omit<ProductWithUI, 'id'>) => void;
   toast: (notification: ToastProps) => void;
-  // REFACTOR: onSubmit에서 onSuccess
   onCloseProductForm: () => void;
 }
 

@@ -1,5 +1,8 @@
 import { CartItem } from '../../../../types';
-import { ProductWithUI } from '../../../entities/product';
+import {
+  filterProductsBySearchTerm,
+  ProductWithUI,
+} from '../../../entities/product';
 import { ConditionalRender } from '../../../shared/ui/conditional-render';
 import { ToastProps } from '../../../shared/ui/toast';
 import { ProductCardList } from './product-card-list';
@@ -20,17 +23,7 @@ export function ProductSection({
   addToCart,
   toast,
 }: PropsType) {
-  // REFACTOR
-  const filteredProducts = searchTerm
-    ? products.filter(
-        (product) =>
-          product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          (product.description &&
-            product.description
-              .toLowerCase()
-              .includes(searchTerm.toLowerCase()))
-      )
-    : products;
+  const filteredProducts = filterProductsBySearchTerm(products, searchTerm);
 
   return (
     <section>

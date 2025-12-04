@@ -1,4 +1,5 @@
 import { Coupon } from '../../../../types';
+import { findCouponByCode } from '../../../entities/coupon';
 import { ToastProps } from '../../../shared/ui/toast';
 
 interface PropsType {
@@ -10,7 +11,8 @@ interface PropsType {
 export function useApplyCoupon({ coupons, applyCoupon, toast }: PropsType) {
   const handleApplyCoupon = (e: React.ChangeEvent<HTMLSelectElement>) => {
     try {
-      const coupon = coupons.find((c) => c.code === e.target.value);
+      const coupon = findCouponByCode(coupons, e.target.value);
+
       if (!coupon) return;
       applyCoupon(coupon);
 

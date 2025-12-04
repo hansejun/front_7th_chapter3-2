@@ -1,5 +1,7 @@
-import { CartItem, Product } from '../../../../types';
+import { CartItem } from '../../../../types';
+import { getRemainingStock } from '../../../entities/cart';
 import { ProductCard, ProductWithUI } from '../../../entities/product';
+import { mapProductToViewModel } from '../../../entities/product/model/product-view-mapper';
 import { useAddCart } from '../../../features/cart/add-cart';
 import { ToastProps } from '../../../shared/ui/toast';
 
@@ -9,14 +11,6 @@ interface PropsType {
   addToCart: (product: ProductWithUI) => void;
   toast: (notification: ToastProps) => void;
 }
-
-// REFACTOR
-const getRemainingStock = (cart: CartItem[], product: Product): number => {
-  const cartItem = cart.find((item) => item.product.id === product.id);
-  const remaining = product.stock - (cartItem?.quantity || 0);
-
-  return remaining;
-};
 
 export function ProductCardList({
   products,
@@ -30,11 +24,12 @@ export function ProductCardList({
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
       {products.map((product) => {
         const remainingStock = getRemainingStock(cart, product);
+        const viewModel = mapProductToViewModel(product, remainingStock);
 
         return (
           <ProductCard
-            product={product}
-            remainingStock={remainingStock}
+            key={product.id}
+            viewModel={viewModel}
             onAddCart={() => handleAddCart(product)}
           />
         );

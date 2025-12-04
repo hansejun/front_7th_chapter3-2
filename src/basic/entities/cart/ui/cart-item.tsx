@@ -1,4 +1,5 @@
 import { CartItem as CartItemType } from '../../../../types';
+import { formatPrice } from '../../../shared/lib/formatters';
 
 interface CartItemProps {
   item: CartItemType;
@@ -63,7 +64,6 @@ export function CartItem({
           </button>
         </div>
         <div className="text-right">
-          {/* REFACTOR */}
           {hasDiscount && (
             <span className="text-xs text-red-500 font-medium block">
               -{discountRate}%
@@ -71,8 +71,7 @@ export function CartItem({
           )}
 
           <p className="text-sm font-medium text-gray-900">
-            {/* REFACTOR */}
-            {Math.round(itemTotal).toLocaleString()}원
+            {formatPrice(itemTotal)}
           </p>
         </div>
       </div>
