@@ -3,6 +3,7 @@ import { useEditProduct } from './use-edit-product';
 import { XIcon } from '../../../shared/ui/icons';
 import { Button } from '../../../shared/ui/button';
 import { Input } from '../../../shared/ui/input';
+import { Label } from '../../../shared/ui/label';
 
 interface PropsType {
   product: ProductWithUI;
@@ -31,9 +32,7 @@ export function EditProductForm({ product, onCloseProductForm }: PropsType) {
         <h3 className="text-lg font-medium text-gray-900">상품 수정</h3>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              상품명
-            </label>
+            <Label>상품명</Label>
             <Input
               type="text"
               value={form.name}
@@ -42,9 +41,7 @@ export function EditProductForm({ product, onCloseProductForm }: PropsType) {
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              설명
-            </label>
+            <Label>설명</Label>
             <Input
               type="text"
               value={form.description}
@@ -52,9 +49,7 @@ export function EditProductForm({ product, onCloseProductForm }: PropsType) {
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              가격
-            </label>
+            <Label>가격</Label>
             <Input
               type="text"
               value={form.price === 0 ? '' : form.price}
@@ -65,9 +60,7 @@ export function EditProductForm({ product, onCloseProductForm }: PropsType) {
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              재고
-            </label>
+            <Label>재고</Label>
             <Input
               type="text"
               value={form.stock === 0 ? '' : form.stock}
@@ -79,9 +72,7 @@ export function EditProductForm({ product, onCloseProductForm }: PropsType) {
           </div>
         </div>
         <div className="mt-4">
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            할인 정책
-          </label>
+          <Label size="md">할인 정책</Label>
           <div className="space-y-2">
             {form.discounts.map((discount, index) => (
               <div

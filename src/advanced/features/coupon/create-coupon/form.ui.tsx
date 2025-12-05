@@ -2,6 +2,7 @@ import { useCreateCoupon } from './use-create-coupon';
 import { Button } from '../../../shared/ui/button';
 import { Input } from '../../../shared/ui/input';
 import { Select } from '../../../shared/ui/select';
+import { Label } from '../../../shared/ui/label';
 
 interface CreateCouponFormProps {
   onCloseCouponForm: () => void;
@@ -26,9 +27,7 @@ export function CreateCouponForm({ onCloseCouponForm }: CreateCouponFormProps) {
         <h3 className="text-md font-medium text-gray-900">새 쿠폰 생성</h3>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              쿠폰명
-            </label>
+            <Label>쿠폰명</Label>
             <Input
               type="text"
               value={couponForm.name}
@@ -39,9 +38,7 @@ export function CreateCouponForm({ onCloseCouponForm }: CreateCouponFormProps) {
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              쿠폰 코드
-            </label>
+            <Label>쿠폰 코드</Label>
             <Input
               type="text"
               value={couponForm.code}
@@ -52,9 +49,7 @@ export function CreateCouponForm({ onCloseCouponForm }: CreateCouponFormProps) {
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              할인 타입
-            </label>
+            <Label>할인 타입</Label>
             <Select
               value={couponForm.discountType}
               onChange={onChangeDiscountType}
@@ -65,9 +60,7 @@ export function CreateCouponForm({ onCloseCouponForm }: CreateCouponFormProps) {
             </Select>
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              {isAmount ? '할인 금액' : '할인율(%)'}
-            </label>
+            <Label>{isAmount ? '할인 금액' : '할인율(%)'}</Label>
             <Input
               type="text"
               value={
